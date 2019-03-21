@@ -9,7 +9,7 @@ before you use it , you need php7.0+ , mysql 5.6+ , apache or nginx
 
 3. create a virtual site by update nginx config or apache config;
 
-4. cd admin-lte/config , open update db.php; as you mysql-config update this file;
+4. cd admin-lte/config , open and update db.php; as you mysql-config update this file;
 
 5. open chrome and visit this virtual site ; enjoy it!!
 
