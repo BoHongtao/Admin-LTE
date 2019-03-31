@@ -34,10 +34,10 @@ return [
         /**
          * 账号基本信息，请从微信公众平台/开放平台获取
          */
-        'app_id'  => 'wxd7ae15ca1ae2d05c',         // AppID
-        'secret'  => 'b065b1efe145218a5409d2a19dac45de',     // AppSecret
-        'token'   => 'Abcd1234',          // Token
-        'aes_key' => 'gz3ZPcut2hZHKZOyMi9QtaUpH5BwXBwpMJd4GoRmTK9',                    // EncodingAESKey，安全模式下请一定要填写！！！
+        'app_id'  => '',         // AppID
+        'secret'  => '',     // AppSecret
+        'token'   => '',          // Token
+        'aes_key' => '',                    // EncodingAESKey，安全模式下请一定要填写！！！
         /**
          * 日志配置
          *
@@ -49,7 +49,7 @@ return [
         'log' => [
             'level'      => 'debug',
             'permission' => 0777,
-            'file'       => '/data/home/whost/www/gotrip/trip/web/easywechat.log',
+            'file'       => '',
         ],
         /**
          * OAuth 配置
@@ -59,7 +59,7 @@ return [
          */
         'oauth' => [
             'scopes'   => ['snsapi_userinfo'],
-            'callback' => '/trip/admin/mobile-index.php?r=wechat-api/callback',
+            'callback' => '',
         ],
         /**
          * Guzzle 全局设置
@@ -72,11 +72,11 @@ return [
         ],
         // 小程序配置
         'mini_program' => [
-            'app_id'   => 'wx213d46a878b1ab2a',
-            'secret'   => 'acda24dd56e517bf4feacf8d4df8c947',
+            'app_id'   => '',
+            'secret'   => '',
             // token 和 aes_key 开启消息推送后可见
-            'token'    => 'your-token',
-            'aes_key'  => 'your-aes-key'
+            'token'    => '',
+            'aes_key'  => ''
         ],
     ]
 ];
