@@ -48,18 +48,18 @@ class WechatApiController extends Controller
         $buttons = [
             [
                 "type" => "click",
-                "name" => "联系客服",
-                "key"  => "CUSTOMER_SERVICE"
+                "name" => "",
+                "key"  => ""
             ],
             [
                 "type" => "view",
-                "name" => "查看行程",
-                "url"  => $url . '?r=wechat-journey/index'
+                "name" => "",
+                "url"  => $url . '?r='
             ],
             [
                 "type" => "view",
-                "name" => "我的信息",
-                "url"  => $url . '?r=wechat-user/index'
+                "name" => "",
+                "url"  => $url . '?r='
             ]
         ];
         $menu->add($buttons);
