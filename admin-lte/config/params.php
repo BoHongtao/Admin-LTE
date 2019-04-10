@@ -1,27 +1,9 @@
 <?php
 return [
-    'host' => [
-        'ip' => '10.25.156.232',
-        'project' => 'sand-dev',
-        'application' => 'admin',
-    ],
     'adminEmail' => 'admin@example.com',
-    'title' => '沙盘',
+    'title' => 'Admin-LTE',
     'pageSize' => 13,
     'sources' => require(__DIR__ . '/sources.php'),
-
-    'geo_map_key' => 'AIzaSyCNfNwVmOUpl_nC4UJgp71cPgBTmMvNUgo',
-    'tencent_map_key'=>'DBEBZ-TPAWO-LPNWO-S4RBQ-DIV27-R4FCH',
-
-    'source_query_url'=>'/mobile-index.php?r=sources/index&sid=',
-
-    //服务器计划任务配置
-    'IPC_task'=>[
-        'ID'=>'A',
-        'CMD'=>10,
-        'MSGTYPE'=> 1001,
-        'FILE'=>'/data/home/whost/cfg/ajob_mq.key'
-    ],
 
     'file_upload' => 'uploads/', //文件上传目录 相对于web
     'WECHAT' => [
