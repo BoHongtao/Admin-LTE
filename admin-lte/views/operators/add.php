@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = '增加';
             type: 'post',
             data: $('#add-operators').serialize(),
             success: function (data) {
-                if (data.code == 0) {
+                if (data.code == 200) {
                     showToast('success', '添加用户成功', '2S后返回', 5500);
                     setTimeout('window.location.href="<?= Url::toRoute(['operators/index']) ?>"', 1500);
                 } else {

@@ -56,10 +56,10 @@ class OperatorsController extends BaseController
                 if (!$auth->assign($role, $model->id)) throw new \Exception("管理员角色配置失败！");
                 recordLog('添加了管理员' . $model->operator_name, 1);
                 $tr->commit();
-                return ['code' => 0, 'desc' => '添加成功'];
+                return ['code' => 200, 'desc' => '添加成功'];
             } catch (\Exception $e) {
                 $tr->rollBack();
-                return ['code' => 9999, 'desc' => $e->getMessage()];
+                return ['code' => 0, 'desc' => $e->getMessage()];
             }
         }
         $roles = $model->getRoles();
@@ -79,9 +79,9 @@ class OperatorsController extends BaseController
             $this->returnJson();
             if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->updatePwd($model->newpwd)) {
                 recordLog('修改了管理员' . $username . '的密码', 1);
-                return ['code' => 0, 'msg' => '密码修改成功'];
+                return ['code' => 200, 'msg' => '密码修改成功'];
             }
-            return ['code' => 9999, 'msg' => $model->errors];
+            return ['code' => 0, 'msg' => $model->errors];
         }
         return $this->render('modify-pwd', [
             'model' => $model
@@ -104,12 +104,12 @@ class OperatorsController extends BaseController
                 if ($rs) {
                     recordLog('重置了管理员' . $model['operator_name'] . '的密码', 1);
                     return [
-                        'code' => 0,
+                        'code' => 200,
                         'desc' => '重置密码成功',
                     ];
                 } else {
                     return [
-                        'code' => 9999,
+                        'code' => 0,
                         'desc' => '重置密码失败',
                     ];
                 }
@@ -129,19 +129,19 @@ class OperatorsController extends BaseController
             if (!$model->validate()) {
                 $errors = $model->errors;
                 return [
-                    'code' => 9999,
+                    'code' => 0,
                     'desc' => $errors[array_keys($errors)[0]][0]
                 ];
             }
             if ($model->save()) {
                 recordLog('修改了管理员' . $model->operator_name, 1);
                 return [
-                    'code' => 0,
+                    'code' => 200,
                     'desc' => '信息修改成功'
                 ];
             } else {
                 return [
-                    'code' => 9999,
+                    'code' => 0,
                     'desc' => $model->errors
                 ];
             }

@@ -37,7 +37,7 @@ $(document).on("beforeSubmit", "#sys-user", function () {
         type:'post',
         data:$('#sys-user').serialize(),
         success:function(data){
-            if(data.code == 0){
+            if(data.code == 200){
                 parent.showToast('success','重置密码成功','',1500);
                 parent.closeModal();
                 window.location.reload();

@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = '修改';
             type: 'post',
             data: $('#operators-update-form').serialize(),
             success: function (data) {
-                if (data.code == 0) {
+                if (data.code == 200) {
                     showToast('success', '修改用户成功', '', 2500);
                     setTimeout('window.location.href="<?= Url::toRoute(['operators/index']) ?>"', 1500);
                 } else {
