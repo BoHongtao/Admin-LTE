@@ -22,9 +22,9 @@ class RoleController extends BaseController
             $role->description = $model->description;
             if ($auth->add($role)) {
                 recordLog('添加了角色'.$role->name, 0); //记录日志
-                return ['code' => 0, 'desc' => '添加成功'];
+                return ['code' => 200, 'desc' => '添加成功'];
             } else {
-                return ['code' => 999, 'desc' => '添加失败'];
+                return ['code' => 0, 'desc' => '添加失败'];
             }
         }
         return $this->render('add', [
@@ -89,10 +89,10 @@ class RoleController extends BaseController
                 }
                 recordLog('为角色'.$name.'重新配置了权限', 9); //记录日志
                 $tr->commit();
-                return ['code'=>0,'desc'=>'添加成功'];
+                return ['code'=>200,'desc'=>'添加成功'];
             }catch (\Exception $e){
                 $tr->rollBack();
-                return ['code'=>9999,'desc'=>$e->getMessage()];
+                return ['code'=>0,'desc'=>$e->getMessage()];
             }
         }
         $this->layout = 'main_large_frame';

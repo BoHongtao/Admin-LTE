@@ -166,7 +166,7 @@ use yii\helpers\Url;
             data: $('#quanxian').serialize(),
             type: "POST",
             success: function (data) {
-                if (data.code == 0) {
+                if (data.code == 200) {
                     parent.closeModal();
                     parent.showToast('success', '修改权限成功', '', 2500);
                 } else {
