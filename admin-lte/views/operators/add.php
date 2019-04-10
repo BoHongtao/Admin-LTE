@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = '增加';
 <?php $this->beginBlock('script') ?>
 <script type="text/javascript">
     $(document).on("beforeSubmit", "#add-operators", function () {
-        $('#add-operators').ajaxSubmit({
+        $.ajax({
             url: $('#add-operators').attr('action'),
             type: 'post',
             data: $('#add-operators').serialize(),
@@ -73,6 +73,11 @@ $this->params['breadcrumbs'][] = '增加';
                     $('#manager-add-btn').attr('disabled', false);
                     $('#manager-cancle-btn').attr('disabled', false);
                 }
+            },
+            error: function (data) {
+                $('#orgsales-update-btn').attr('disabled', false);
+                $('#orgsales-cancle-btn').attr('disabled', false);
+                showToast('error', '系统忙，请稍后重试', '', 2000);
             }
         });
         return false; // Cancel form submitting.

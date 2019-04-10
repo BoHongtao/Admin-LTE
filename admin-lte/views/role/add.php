@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = '增加';
 <?php $this->beginBlock('script') ?>
 <script type="text/javascript">
     $(document).on("beforeSubmit", "#add-role", function () {
-        $('#add-role').ajaxSubmit({
+        $.ajax({
             url: $('#add-role').attr('action'),
             type: 'post',
             data: $('#add-role').serialize(),
