@@ -1,6 +1,6 @@
 <?php
 $params = array_merge(
-    require(__DIR__ . '/../../../yii2-advanced/common/config/params.php'),
+    require(__DIR__ . '/../../yii2-advanced/common/config/params.php'),
     require(__DIR__ . '/params.php')
 );
 return [
