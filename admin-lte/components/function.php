@@ -100,45 +100,6 @@ function list_to_array($list, $code = 'code', $pk = 'id', $pid = 'pid', $child =
     return $tree;
 }
 
-
-
-//array convert tree
-function getTree($data,$pid=0,$level=0,$isClear=false){
-    static $res = array();
-    if($isClear===true){
-        $res = array();
-    }
-    foreach($data as $k=>$v){
-        if($v['pid'] == $pid){
-            $res[] = $v;
-            $v['level'] = $level;
-            getTree($data,$v['id'],$level+1,false);
-        }
-    }
-}
-
-/**
- * 二维数组去除重复值
- * @param type $arr
- * @param type $key
- * @return type
- */
-function array_unset($arr, $key) {   //$arr->传入数组   $key->判断的key值
-    //建立一个目标数组
-    $res = array();
-    foreach ($arr as $value) {
-        //查看有没有重复项
-        if (isset($res[$value[$key]])) {
-            //有：销毁
-            unset($value[$key]);
-        } else {
-            $res[$value[$key]] = $value;
-        }
-    }
-    return $res;
-}
-
-
 /**
  * 生成uuid
  * @return string
@@ -151,34 +112,6 @@ function getUuid() {
     $uuid .= substr($str, 16, 4);
     $uuid .= substr($str, 20, 12);
     return $uuid;
-}
-
-function tradeno(){
-    $str = md5(uniqid(mt_rand(), true));
-        $uuid = substr($str, 0, 8);
-        $uuid .= substr($str, 8, 4);
-        $uuid .= substr($str, 12, 4);
-        $uuid .= substr($str, 16, 4);
-        $uuid .= substr($str, 20, 12);
-        return $uuid;
-}
-
-/**
- * 生成token
- * @return type
- */
-function genToken() {
-    return md5(genUID());
-}
-/**
- * 生成uuid
- * @return type
- */
-function genUID(){
-    $data = random_bytes(16);
-    $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-    $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
-    return vsprintf('%s%s%s%s%s%s%s%s', str_split(bin2hex($data), 4));
 }
 
 /**
