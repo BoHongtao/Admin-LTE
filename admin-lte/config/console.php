@@ -12,22 +12,6 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-//        'log' => [
-//            'traceLevel' => YII_DEBUG ? 3 : 0,
-//            'targets' => [
-//                [
-//                    'logVars' => [],
-//                    'class' => 'yii\log\SysmqTarget',
-//                    'levels' => ['trace', 'info', 'warning', 'error'],
-//                    'logIPC' => [
-//                        'id' => 'B',
-//                        'cmd' => 65537,
-//                        'msgtype' => 1001,
-//                        'file' => '/data/home/whost/cfg/logmq.key',
-//                    ],
-//                ],
-//            ],
-//        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -41,13 +25,6 @@ $config = [
         'db' => $db,
     ],
     'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
 ];
 
 return $config;
