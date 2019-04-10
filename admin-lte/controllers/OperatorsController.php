@@ -14,14 +14,11 @@ class OperatorsController extends BaseController
     {
         return $this->render('index');
     }
+
     public function actionData($operator_name = '')
     {
-        $query = $this->getQuery($operator_name);
-        $pager = new \yii\data\Pagination([
-            'totalCount' => $query->count(),
-            'pageSize' => $this->pageSize,
-            'route' => 'operators/data'
-        ]);
+        $query = Operators::getQuery($operator_name);
+        $pager = $this->Pager($query,'operators/data');
         $model = $query->offset($pager->offset)->limit($pager->limit)->all();
         $rules = Yii::$app->authManager->getRoles();
         $rules = array_column($rules, "description", "name");
@@ -31,29 +28,25 @@ class OperatorsController extends BaseController
             "roles" => $rules
         ]);
     }
-    public function getQuery($operator_name)
-    {
-        $query = Operators::find()->where(['operator_type' => 1]);
-        $operator_name and $query->andWhere(['like', 'operator_name', $operator_name]);
-        return $query;
-    }
-
     public function actionAdd()
     {
         $model = new Operators();
         $model->scenario = 'add';
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             $this->returnJson();
-            if (!$model->validate()) return ['code' => 9999, 'desc' => $this->getMsg($model)];
+            if (!$model->validate())
+                return ['code' => 0, 'desc' => $this->getMsg($model)];
             $data = Yii::$app->request->post();
             $model->operator_type = 1;
             $model->password = Yii::$app->getSecurity()->generatePasswordHash($data['Operators']['password']);
             $tr = Yii::$app->db->beginTransaction();
             try {
-                if (!$model->save(false)) throw new \Exception("管理员保存失败！");
+                if (!$model->save(false))
+                    throw new \Exception("管理员保存失败！");
                 $auth = Yii::$app->authManager;
                 $role = $auth->getRole($data['Operators']['role_id']);
-                if (!$auth->assign($role, $model->id)) throw new \Exception("管理员角色配置失败！");
+                if (!$auth->assign($role, $model->id))
+                    throw new \Exception("管理员角色配置失败！");
                 recordLog('添加了管理员' . $model->operator_name, 1);
                 $tr->commit();
                 return ['code' => 200, 'desc' => '添加成功'];
@@ -103,15 +96,9 @@ class OperatorsController extends BaseController
                 ])->execute();
                 if ($rs) {
                     recordLog('重置了管理员' . $model['operator_name'] . '的密码', 1);
-                    return [
-                        'code' => 200,
-                        'desc' => '重置密码成功',
-                    ];
+                    return ['code' => 200, 'desc' => '重置密码成功'];
                 } else {
-                    return [
-                        'code' => 0,
-                        'desc' => '重置密码失败',
-                    ];
+                    return ['code' => 0, 'desc' => '重置密码失败'];
                 }
             }
         }
@@ -128,22 +115,13 @@ class OperatorsController extends BaseController
             $this->returnJson();
             if (!$model->validate()) {
                 $errors = $model->errors;
-                return [
-                    'code' => 0,
-                    'desc' => $errors[array_keys($errors)[0]][0]
-                ];
+                return ['code' => 0, 'desc' => $errors[array_keys($errors)[0]][0]];
             }
             if ($model->save()) {
                 recordLog('修改了管理员' . $model->operator_name, 1);
-                return [
-                    'code' => 200,
-                    'desc' => '信息修改成功'
-                ];
+                return ['code' => 200, 'desc' => '信息修改成功'];
             } else {
-                return [
-                    'code' => 0,
-                    'desc' => $model->errors
-                ];
+                return ['code' => 0, 'desc' => $model->errors];
             }
         }
         return $this->render('update', [

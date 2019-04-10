@@ -23,7 +23,6 @@ class Pwd extends \yii\base\Model{
             'repwd' => '确认密码'
         ];
     }
-//    $2y$13$MIJDDCXL7Dm7XYCxzchDQuuLwm3bDlXSKT1BvbrjlJsCNb/vu7Nsm
     public function comparepwd($attr,$param){
         $pwd = Yii::$app->user->identity->password;
         if(!Yii::$app->security->validatePassword($this->pwd, $pwd)){

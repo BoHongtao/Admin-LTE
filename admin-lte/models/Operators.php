@@ -21,13 +21,11 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
             [['password', 're_pwd'], 'string', 'max' => 16,'min' => 6,'on' => ['add','tourism']],
             [['password', 're_pwd'],'match','pattern' => "/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/",'message' => '密码必须包含字母和数字','on' => ['add','tourism']],
             [['password','operator_name'],'required','on' => 'tourism'],
-//            [['password'],'match','pattern' => "/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/",'message' => '密码必须包含字母和数字','on' => 'tourism'],
             [['operator_name'], 'required','on' =>['add','update']],
             [['operator_type'], 'integer'],
             [['record_time', 'last_login_time'], 'safe'],
             [['operator_name', 'contact_name', 'contact_phone', 'wechat', 'password'], 'string', 'max' => 255],
             ['re_pwd', 'compare', 'compareAttribute' => 'password','on' => ['add','tourism'],'message'=>'与密码输入不一致'],
-//            [['contact_phone'], 'match', 'pattern' => '/^1[34578]\d{9}$/'],
         ];
     }
 
@@ -39,7 +37,6 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
             'contact_name' => '联系人',
             'contact_phone' => '联系电话',
             'wechat' => '微信号',
-            'bank_name' => '银行名称',
             'password' => '密码',
             'new_pwd' => '新密码',
             're_pwd' => '确认密码',
@@ -49,7 +46,12 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
             'role_id' => '角色'
         ];
     }
-
+    //返回查询对象
+    public static function getQuery($operator_name){
+        $query = self::find()->where(['operator_type' => 1]);
+        $operator_name and $query->andWhere(['like', 'operator_name', $operator_name]);
+        return $query;
+    }
     public static function login($user) {
         $model = Operators::find()->where(['operator_name' => $user])->one();
         return $model;
@@ -63,16 +65,7 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
     }
 
     public function validatePassword($inputPwd, $pwd) {
-        //echo $pwd;exit;
-//        if (Yii::$app->getSecurity()->validatePassword($password, $hash)) {
-        if (Yii::$app->getSecurity()->validatePassword($inputPwd, $pwd)) {
-//            增加操作日志
-//            addLog($this->login_name, 1, 3, $this->id, '登录成功');
-            return true;
-        } else {
-//            addLog($this->login_name, 1, 3, $this->id, '登录失败:用户名或密码错误');
-            return false;
-        }
+        return Yii::$app->getSecurity()->validatePassword($inputPwd, $pwd) ? true : false;
     }
 
     public function getAuthKey() {
