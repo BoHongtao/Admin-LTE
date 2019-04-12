@@ -5,6 +5,7 @@ $params = array_merge(
 );
 return [
     'id' => 'app-back-admin',
+//    'language' => 'zh-TW',
     'language' => 'zh-CN',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -45,6 +46,17 @@ return [
             'defaultRoles' => ['系统管理员'],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        //配置语言包
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'fileMap' => [
+                        'common' => 'common.php',
+                    ],
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];

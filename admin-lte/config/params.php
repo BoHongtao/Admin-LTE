@@ -3,8 +3,6 @@ return [
     'adminEmail' => 'admin@example.com',
     'title' => 'Admin-LTE',
     'pageSize' => 13,
-    'sources' => require(__DIR__ . '/sources.php'),
-
     'file_upload' => 'uploads/', //文件上传目录 相对于web
     'WECHAT' => [
         /**
