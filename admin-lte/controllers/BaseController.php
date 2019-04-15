@@ -9,12 +9,9 @@ use yii\web\ForbiddenHttpException;
 
 class BaseController extends Controller
 {
-    public $pageSize;
-
     public function init()
     {
         parent::init();
-        $this->pageSize = Yii::$app->params ['pageSize'];
     }
 
     public function beforeAction($action)
@@ -60,7 +57,7 @@ class BaseController extends Controller
     {
         return new \yii\data\Pagination ([
             'totalCount' => $model->count(),
-            'pageSize' => $this->pageSize,
+            'pageSize' => Yii::$app->params ['pageSize'],
             'route' => $route
         ]);
     }

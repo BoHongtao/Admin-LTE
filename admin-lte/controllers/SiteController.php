@@ -48,6 +48,22 @@ class SiteController extends Controller {
         ];
     }
 
+    /*
+     * 错误处理页面
+     */
+    public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+        if(Yii::$app->user->isGuest){
+            return $this->redirect(\yii\helpers\Url::to(['site/login']));
+        }
+        if ($exception !== null) {
+            return $this->render('error');
+        }
+    }
+
+
+
     public function actionLogin() {
         $this->layout = 'main_login';
         if (!\Yii::$app->user->isGuest){
