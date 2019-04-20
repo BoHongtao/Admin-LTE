@@ -143,13 +143,13 @@ function login(){
     //菜单表中的权限
     $omenus = \app\models\Menu::allMenuList(["display"=>2]);
     $auth = Yii::$app->authManager;
-    if (Yii::$app->user->id === 1) {
+    if (Yii::$app->user->identity->id == 1) {
         $res = $omenus;
     }else{
+        //获取用户拥有得权限
         $menus = array_keys($auth->getPermissionsByUser(Yii::$app->user->identity->id));
         foreach ($omenus as $k => $val) {
-            $rolearr = explode(',', $val['act']);
-            if(!empty($rolearr[0]) && !in_array($rolearr[0], $menus))
+            if(!empty($val['act']) && !in_array($val['act'], $menus))
                 unset($omenus[$k]);
         }
         $res = $omenus;
