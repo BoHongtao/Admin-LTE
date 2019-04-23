@@ -98,91 +98,88 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
-<script>
-    <?PHP $this->beginBlock('js_end') ?>
-    $(function () {
-        //选中状态
-        var rules = <?php echo $rule?>;
-        $('.auth_rules').each(function () {
-            var orules = this.value.split(',');
-            for (i = 0; i < orules.length; i++) {
-                if ($.inArray(orules[i], rules) > -1) {
-                    $(this).prop('checked', true);
+<?php $this->beginBlock('script') ?>
+    <script>
+        $(function () {
+            //选中状态
+            var rules = <?php echo $rule?>;
+            $('.auth_rules').each(function () {
+                var orules = this.value.split(',');
+                for (i = 0; i < orules.length; i++) {
+                    if ($.inArray(orules[i], rules) > -1) {
+                        $(this).prop('checked', true);
+                    }
+                    if (this.value == '') {
+                        $(this).prop('checked', false);
+                    }
                 }
-                if (this.value == '') {
-                    $(this).prop('checked', false);
+            });
+            $(".hd").each(function () {
+                var checkcount = $(this).next().find("input[type='checkbox']:checked").length;
+                var count = $(this).next().find("input[type='checkbox']").length;
+                if (checkcount > 0) {
+                    if (checkcount == count) {
+                        $(this).children(".checkbox").find("input[type='checkbox']").prop('checked', true);
+                    }
                 }
-            }
-        });
-        $(".hd").each(function () {
-            var checkcount = $(this).next().find("input[type='checkbox']:checked").length;
-            var count = $(this).next().find("input[type='checkbox']").length;
-            if (checkcount > 0) {
-                if (checkcount == count) {
-                    $(this).children(".checkbox").find("input[type='checkbox']").prop('checked', true);
-                }
-            }
-        });
-        //全选节点
-        $('.rules_all').on('change', function () {
-            $(this).closest('dl').find('dd').find('input').prop('checked', this.checked);
-        });
-        $('.rules_row').on('change', function () {
-            $(this).closest('.rule_check').find('.child_row').find('input').prop('checked', this.checked);
-            var allcheck = $(this).parents('.bd').find("input[type='checkbox']:checked").length;
-            var allcount = $(this).parents('.bd').find("input[type='checkbox']").length;
-            if (allcheck == allcount) {
-                $(this).parents('.bd').prev().find('input').prop('checked', true);
-            } else {
-                $(this).parents('.bd').prev().find('input').prop('checked', false);
-            }
-        });
-        $('.threes').on('change', function () {
-            var parent = $(this).parents('.child_row');
-            var checkcount = parent.find("input[type='checkbox']:checked").length;
-            var sublenth = parent.find('.checkbox').length; //获取同级下的兄弟元素的个数
-            if (checkcount == sublenth) {
-                parent.prev().find('input').prop('checked', this.checked);
-            } else {
-                parent.prev().find('input').prop('checked', false);
-            }
-            if (checkcount == 0) {
-                parent.prev().find('input').prop('checked', false);
-            }
-            var pparent = parent.parents('.bd');
-            var ppcountcheck = pparent.find("input[type='checkbox']:checked").length;
-            if (ppcountcheck == pparent.find("input[type='checkbox']").length) {
-                parent.parents('.bd').prev().find('input').prop('checked', true);
-            } else {
-                parent.parents('.bd').prev().find('input').prop('checked', false);
-            }
-        })
-    });
-
-    function update(name) {
-        $.ajax({
-            url: "<?php echo Url::to(['role/quanxian']) ?>&name=" + name,
-            data: $('#quanxian').serialize(),
-            type: "POST",
-            success: function (data) {
-                if (data.code == 200) {
-                    parent.closeModal();
-                    parent.showToast('success', '修改权限成功', '', 2500);
+            });
+            //全选节点
+            $('.rules_all').on('change', function () {
+                $(this).closest('dl').find('dd').find('input').prop('checked', this.checked);
+            });
+            $('.rules_row').on('change', function () {
+                $(this).closest('.rule_check').find('.child_row').find('input').prop('checked', this.checked);
+                var allcheck = $(this).parents('.bd').find("input[type='checkbox']:checked").length;
+                var allcount = $(this).parents('.bd').find("input[type='checkbox']").length;
+                if (allcheck == allcount) {
+                    $(this).parents('.bd').prev().find('input').prop('checked', true);
                 } else {
-                    var desc = data.desc;
-                    parent.showToast('error', '错误提示', data.desc, 2500);
-                    $('#update-quanxian').attr('disabled', false);
+                    $(this).parents('.bd').prev().find('input').prop('checked', false);
                 }
-            },
-            error: function (data) {
-                $('#update-quanxian').attr('disabled', false);
-                showToast('error', '错误提示', '系统忙，请稍后重试', 2000);
-            }
+            });
+            $('.threes').on('change', function () {
+                var parent = $(this).parents('.child_row');
+                var checkcount = parent.find("input[type='checkbox']:checked").length;
+                var sublenth = parent.find('.checkbox').length; //获取同级下的兄弟元素的个数
+                if (checkcount == sublenth) {
+                    parent.prev().find('input').prop('checked', this.checked);
+                } else {
+                    parent.prev().find('input').prop('checked', false);
+                }
+                if (checkcount == 0) {
+                    parent.prev().find('input').prop('checked', false);
+                }
+                var pparent = parent.parents('.bd');
+                var ppcountcheck = pparent.find("input[type='checkbox']:checked").length;
+                if (ppcountcheck == pparent.find("input[type='checkbox']").length) {
+                    parent.parents('.bd').prev().find('input').prop('checked', true);
+                } else {
+                    parent.parents('.bd').prev().find('input').prop('checked', false);
+                }
+            })
         });
-        return false;
-    }
-    <?php $this->endBlock() ?>
-</script>
 
-<?php $this->registerJs($this->blocks['js_end'], \yii\web\View::POS_END); ?>
+        function update(name) {
+            $.ajax({
+                url: "<?php echo Url::to(['role/quanxian']) ?>&name=" + name,
+                data: $('#quanxian').serialize(),
+                type: "POST",
+                success: function (data) {
+                    if (data.code == 200) {
+                        parent.closeModal();
+                        parent.showToast('success', '修改权限成功', '', 2500);
+                    } else {
+                        var desc = data.desc;
+                        parent.showToast('error', '错误提示', data.desc, 2500);
+                        $('#update-quanxian').attr('disabled', false);
+                    }
+                },
+                error: function (data) {
+                    $('#update-quanxian').attr('disabled', false);
+                    showToast('error', '错误提示', '系统忙，请稍后重试', 2000);
+                }
+            });
+            return false;
+        }
+    </script>
+<?php $this->endBlock() ?>

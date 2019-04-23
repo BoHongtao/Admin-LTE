@@ -28,7 +28,5 @@ AppAsset::register($this);
         <?php $this->endBody() ?>
     </body>
 </html>
-<script src="static/js/toastr.js" type="text/javascript"></script>
-<script src="static/js/wang.js" type="text/javascript"></script>
 <?php if(isset($this->blocks['script'])) echo $this->blocks['script']?>
 <?php $this->endPage() ?>
