@@ -4,6 +4,11 @@ return [
     'title' => 'Admin-LTE',
     'pageSize' => 13,
     'file_upload' => 'uploads/', //文件上传目录 相对于web
+    //七牛
+    'access_key'=>'',
+    'secret_key'=>'',
+    'bucket'=>'',
+    'domain'=>'',
     'WECHAT' => [
         /**
          * Debug 模式，bool 值：true/false
