@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\models\Operlog;
 use yii;
-use yii\data\Pagination;
 
 class OperLogController extends BaseController{
     public function actionIndex(){
@@ -20,7 +19,7 @@ class OperLogController extends BaseController{
             $query->andWhere (['user_name' => $operator['operator_name']]);
         }
         $pager = $this->Pager($query,'oper-log/data');
-        $operateLog = $query->offset ( $pager->offset )->limit ( $pager->limit )->all();
+        $operateLog = $query->offset($pager->offset)->limit($pager->limit)->orderBy('record_time desc')->all();
         return $this->renderPartial('_list',[
             'operatelog' => $operateLog,
             'pager' => $pager
