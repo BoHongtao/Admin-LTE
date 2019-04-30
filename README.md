@@ -15,4 +15,6 @@ before you use it , you need php7.0+ , mysql 5.6+ , apache or nginx
 
 ![](https://github.com/BoHongtao/Admin-LTE/blob/master/admin-lte/web/uploads/info.png)
 # generate code
+if you want use auto generate code , you need python 3.6 , and run python auto_code_controller.py ,input controller name and model name ,
+and you'll get a new base controller
 ![](https://github.com/BoHongtao/Admin-LTE/blob/master/admin-lte/web/uploads/info2.png)
