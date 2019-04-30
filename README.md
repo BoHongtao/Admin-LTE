@@ -14,3 +14,5 @@ before you use it , you need php7.0+ , mysql 5.6+ , apache or nginx
 5. open chrome and visit this virtual site ; Administrator is admin and password is 111aaa ; enjoy it!!
 
 ![](https://github.com/BoHongtao/Admin-LTE/blob/master/admin-lte/web/uploads/info.png)
+# generate code
+![](https://github.com/BoHongtao/Admin-LTE/blob/master/admin-lte/web/uploads/info2.png)
