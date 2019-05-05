@@ -17,7 +17,7 @@ AppAsset::register($this);
     </head>
     <body class="skin-blue sidebar-mini">
         <?php $this->beginBody() ?>
-        <div class="wrapper">
+        <div class="wrapper" style="background-color: #222d32;">
             <?php echo $this->render('_header') ?>
             <?php echo $this->render('_left') ?>
             <div class="content-wrapper">
