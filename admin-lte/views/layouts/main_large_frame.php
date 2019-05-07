@@ -7,8 +7,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-
-AppAsset::register($this);
+\app\assets\AppAssetFrame::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,7 +18,6 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <?= Html::encode($this->title) ?>
         <?php $this->head() ?>
-        <link href="static/css/toastr.css" rel="stylesheet" type="text/css"/>
         <?php if(isset($this->blocks['head'])) echo $this->blocks['head']?>
     </head>
     <body style="background-color: #fff">
