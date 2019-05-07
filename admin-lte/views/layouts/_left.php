@@ -9,9 +9,14 @@ $cations = $controller . '/' . $action;
 <!--左侧菜单-->
 <?php
 //菜单表中的权限
-$menus = login();
-//echo "<pre>";
-//print_r($menus);die;
+//配置缓存，过期时间为120s
+$cache = Yii::$app->cache;
+if(!$cache->exists('menu')){
+    $menus = login();
+    $cache->add('menu',$menus,10);
+}else{
+    $menus = $cache->get('menu');
+}
 ?>
 <aside class="main-sidebar">
     <section class="sidebar">

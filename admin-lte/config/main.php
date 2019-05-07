@@ -57,6 +57,10 @@ return [
                 ],
             ],
         ],
+        //配置缓存组件--文件缓存
+        'cache'=>[
+            'class'=>'yii\caching\FileCache'
+        ]
     ],
     'params' => $params,
 ];

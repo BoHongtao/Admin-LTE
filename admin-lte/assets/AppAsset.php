@@ -33,7 +33,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         "static/bower_components/jquery-ui/jquery-ui.min.js",
-//        "static/bower_components/bootstrap/dist/js/bootstrap.min.js",
+        "static/bower_components/bootstrap/dist/js/bootstrap.min.js",
 //        "static/bower_components/raphael/raphael.min.js",
 //        "static/bower_components/morris.js/morris.min.js",
 //        "static/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js",
