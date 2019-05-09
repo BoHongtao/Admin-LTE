@@ -25,11 +25,11 @@ $this->context->layout = false;
     <div id="wrap" style="margin-top: 100px">
         <section class="content">
             <div class="error-page">
-                <h2 class="headline text-yellow"> 404</h2>
+                <h2 class="headline text-yellow"> <?= $code ?> </h2>
                 <div class="error-content">
-                    <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+                    <h3><i class="fa fa-warning text-yellow"></i> <?= $message ?></h3>
                     <p>
-                        We could not find the page you were looking for.
+                        Something go wrong,
                         Meanwhile, you may <a href="<?= \yii\helpers\Url::toRoute(['operators/index']); ?>">return to dashboard</a> or try using the search form.
                     </p>
                 </div>

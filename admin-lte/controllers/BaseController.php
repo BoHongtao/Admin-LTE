@@ -23,7 +23,7 @@ class BaseController extends Controller
         } else {
             $authname = Yii::$app->controller->id . '/' . Yii::$app->controller->action->id;
             if (!Utils::checkAccess($authname)) {
-                throw new ForbiddenHttpException ("对不起，您现在还没获此操作的权限");
+                throw new ForbiddenHttpException ("对不起，您没获此操作的权限");
                 exit ();
             }
         }
