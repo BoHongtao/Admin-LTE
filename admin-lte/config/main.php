@@ -23,7 +23,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error'],
-                    'logFile' => "@app/runtime/log-" . date('Y-m'). '.log'
+                    'logFile' => "@app/runtime/log-" . date('Y-m-d'). '.log'
                 ],
             ],
         ],
