@@ -9,13 +9,20 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'defaultRoute' => 'site/login',
-    'controllerNamespace' => 'app\controllers',
+    'controllerNamespace' => 'app\modules\v1\controllers',
     'components' => [
         'user' => [
             'identityClass' => 'app\models\Operators',
             'enableAutoLogin' => true,
         ],
-        //本地
+        //api接收json格式数据
+        'request' => [
+            'cookieValidationKey' => 'ax5Ajm6GbpGhhmNX2lAnAfgwMj2RO2Cq',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        //本地日志
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -26,7 +33,13 @@ return [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
+        //配置路由
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
+        //数据库
+        'db' => require(__DIR__ . '/db.php')
     ],
     'modules' => [
         'v1' => [

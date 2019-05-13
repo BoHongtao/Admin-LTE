@@ -3,9 +3,10 @@
 namespace app\modules\v1\controllers;
 
 use Yii;
+use yii\rest\ActiveController;
 use yii\rest\Controller;
 
-class BaseController extends Controller {
+class BaseController extends ActiveController {
     public $url;
     public $body = [] ;
 
