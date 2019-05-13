@@ -6,10 +6,28 @@
  * Time: 22:55
  */
 namespace app\modules\v1\controllers\operator;
-use yii\base\Action;
+use app\modules\v1\controllers\BaseAction;
+use app\modules\v1\models\Operators;
 
-class ViewAction extends Action{
+class ViewAction extends BaseAction {
     public function run(){
-        return "接口返回数据";
+        $operator_id = isset($this->body['id']) ? $this->body['id'] : '';
+        if($operator_id==''){
+            $code = 40012;
+            $result['code'] = $code;
+            $result['desc'] = $this->desc[$code];
+            return $result;
+        }
+        $operatorInfo = Operators::findOne($operator_id);
+        if($operatorInfo){
+            $code = 0;
+        }else{
+            $code = 40018;
+        }
+        $result['code'] = $code;
+        $result['datas'] = $operatorInfo;
+        $result['desc'] = $this->desc[$code];
+        return $result;
+        return $this->body;
     }
 }
