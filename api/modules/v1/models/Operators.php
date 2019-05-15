@@ -3,16 +3,11 @@
 namespace app\modules\v1\models;
 
 use Yii;
+use yii\filters\RateLimitInterface;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
-class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
-
-    public $new_pwd;
-    public $re_pwd;
-    public $roles;
-
-    public static function tableName() {
-        return 'operators';
-    }
+class Operators extends ActiveRecord implements IdentityInterface ,RateLimitInterface{
 
     public function rules() {
         return [
@@ -23,7 +18,7 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
             [['password','operator_name'],'required','on' => 'tourism'],
             [['operator_name'], 'required','on' =>['add','update']],
             [['operator_type'], 'integer'],
-            [['record_time', 'last_login_time'], 'safe'],
+            [['record_time', 'last_login_time','allowance','allowance_updated_at','access_token','expire_time'], 'safe'],
             [['operator_name', 'contact_name', 'contact_phone', 'wechat', 'password'], 'string', 'max' => 255],
             ['re_pwd', 'compare', 'compareAttribute' => 'password','on' => ['add','tourism'],'message'=>'与密码输入不一致'],
         ];
@@ -43,85 +38,96 @@ class Operators extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
             'record_time' => '记录时间',
             'last_login_ip' => '最后登录ip',
             'last_login_time' => '最后登录时间',
-            'role_id' => '角色'
+            'role_id' => '角色',
+            'allowance_updated_at'=>'allowance_updated_at',
+            'allowance'=>'allowance',
+            'access_token'=>'access_token',
+            'expire_time'=>'expire_time'
         ];
     }
-    //返回查询对象
-    public static function getQuery($operator_name){
-        $query = self::find()->where(['operator_type' => 1]);
-        $operator_name and $query->andWhere(['like', 'operator_name', $operator_name]);
-        return $query;
-    }
-    public static function login($user) {
-        $model = Operators::find()->where(['operator_name' => $user])->one();
-        return $model;
-    }
-
-    public function comparePwd($attr, $params) {
-        $sys = Operators::findOne(Yii::$app->session['id']);
-        if (!Yii::$app->getSecurity()->validatePassword($this->password, $sys->password)) {
-            $this->addError($attr, '旧密码错误');
-        }
+    /**
+     * 根据用户名查找用户
+     * Finds an identity by username
+     * @param null $username
+     * @return null|static
+     */
+    public static function findByUsername($username = null) {
+        return static::findOne(['operator_name' => $username]);
     }
 
     public function validatePassword($inputPwd, $pwd) {
         return Yii::$app->getSecurity()->validatePassword($inputPwd, $pwd) ? true : false;
     }
 
-    public function getAuthKey() {
-        
+    public static function findIdentity($id)
+    {
+        // TODO: Implement findIdentity() method.
+        return static::findOne($id);
     }
 
-    public function getId() {
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+        return static::findOne(['access_token' => $token]);
+    }
+
+    public function getId()
+    {
+        // TODO: Implement getId() method.
         return $this->id;
     }
 
-    public function validateAuthKey($authKey) {
-        
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+        return $this->auth_key;
     }
 
-    public static function findIdentity($id) {
-        $user = Operators::find()->where(['id' => $id])->one();
-        $distor = null;
-        return $user;
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
     }
 
-    public static function findIdentityByAccessToken($token, $type = null) {
-        
+    /**
+     * 生成随机的token并加上时间戳
+     * Generated random accessToken with timestamp
+     * @throws \yii\base\Exception
+     */
+    public function generateAccessToken() {
+        $this->access_token = Yii::$app->security->generateRandomString();
+        $this->expire_time = time();
     }
 
-    public function getRoles() {
-        $query = (new \yii\db\Query())
-        ->select(['name', 'type'])
-        ->from("auth_item")->andWhere(['type' => 1]);
-        return $query->all();
-    }
-
-    public function getUserRoles($uid) {
-        $query = (new \yii\db\Query())
-        ->select(['item_name'])
-        ->from("auth_assignment")->andWhere(['user_id' => $uid]);
-        return $query->all();
-    }
-
-    public function addRoles(array $datas, $user_id, $isdelete = 0) {
-        if ($isdelete) {
-            Yii::$app->db->createCommand("DELETE  FROM  auth_assignment WHERE user_id= {$user_id}")
-            ->execute();
+    /**
+     * 验证token是否过期
+     * Validates if accessToken expired
+     * @param null $token
+     * @return bool
+     */
+    public static function validateAccessToken($token = null,$timestamp=0) {
+        if ($token === null) {
+            return false;
+        } else {
+            $expire = Yii::$app->params['accessTokenExpire'];
+            return $timestamp + $expire >= time();
         }
-        //添加对应关系
-        if (!empty($datas)) {
-            $auth = Yii::$app->authManager;
-            foreach ($datas as $val) {
-                $role = $auth->createRole($val);                //创建角色对象
-                //获取用户id，此处假设用户id=1
-                $auth->assign($role, $user_id);
-            }
-        }
-        return;
     }
 
-    public function getAuth() {
-        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
+    public function getRateLimit($request, $action)
+    {
+        return [1, 1]; // $rateLimit requests per second
     }
+
+    public function loadAllowance($request, $action)
+    {
+        return [$this->allowance, $this->allowance_updated_at];
+    }
+
+    public function saveAllowance($request, $action, $allowance, $timestamp)
+    {
+        $this->allowance = $allowance;
+        $this->allowance_updated_at = $timestamp;
+        $this->save();
+    }
+
 }

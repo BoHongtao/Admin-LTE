@@ -12,8 +12,10 @@ return [
     'controllerNamespace' => 'app\modules\v1\controllers',
     'components' => [
         'user' => [
-            'identityClass' => 'app\models\Operators',
+            'identityClass' => 'app\modules\v1\models\Operators',
             'enableAutoLogin' => true,
+            //禁用session组件
+            'enableSession'=>false,
         ],
         //api接收json格式数据
         'request' => [
