@@ -3,12 +3,33 @@
 
 ## 获取token
 ### /v1/site/login
-#### post传递userName  password
+#### params
+| Name | title | Data Type |  Require |
+| ------ | ------ | ------ | ------ |
+| userName | 用户名 | String | 是 |
+| password | 密码 | String | 是 |
+
+![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/1.png)
+
+![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/1.png)
 
 ## 限流功能
+防止恶意请求，如果超过请求次数，返回409错误码
 ```
     public function getRateLimit($request, $action)
     {
         return [1, 1]; // 每秒中允许请求的次数，前面是次数，后面是秒数
     }
 ```
+```
+	{
+		"name": "Too Many Requests",
+		"message": "Rate limit exceeded.",
+		"code": 0,
+		"status": 429,
+		"type": "yii\\web\\TooManyRequestsHttpException"
+	}
+```
+
+
+
