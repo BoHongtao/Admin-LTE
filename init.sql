@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2019-03-20 14:09:54
+Date: 2019-05-15 17:50:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,6 +30,8 @@ CREATE TABLE `auth_assignment` (
 -- ----------------------------
 -- Records of auth_assignment
 -- ----------------------------
+INSERT INTO `auth_assignment` VALUES ('普通', '2', '1555384392');
+INSERT INTO `auth_assignment` VALUES ('普通', '3', '1557467259');
 INSERT INTO `auth_assignment` VALUES ('系统管理员', '1', '1499240608');
 
 -- ----------------------------
@@ -66,7 +68,7 @@ INSERT INTO `auth_item` VALUES ('operators/update', '2', null, null, null, '1517
 INSERT INTO `auth_item` VALUES ('role/create-role', '2', null, null, null, '1517370744', '1517370744');
 INSERT INTO `auth_item` VALUES ('role/index', '2', null, null, null, '1517370636', '1517370636');
 INSERT INTO `auth_item` VALUES ('role/quanxian', '2', null, null, null, '1517370989', '1517370989');
-INSERT INTO `auth_item` VALUES ('普通', '1', '普通', null, null, '1551667308', '1551667308');
+INSERT INTO `auth_item` VALUES ('普通', '1', '', null, null, '1555384355', '1555384355');
 INSERT INTO `auth_item` VALUES ('系统管理员', '1', '系统管理员', null, null, null, null);
 
 -- ----------------------------
@@ -97,6 +99,18 @@ INSERT INTO `auth_item_child` VALUES ('普通', 'operators/update');
 INSERT INTO `auth_item_child` VALUES ('普通', 'role/create-role');
 INSERT INTO `auth_item_child` VALUES ('普通', 'role/index');
 INSERT INTO `auth_item_child` VALUES ('普通', 'role/quanxian');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'menu/create');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'menu/delete');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'menu/index');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'menu/update');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'oper-log/index');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'operators/add');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'operators/index');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'operators/reset-pwd');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'operators/update');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'role/create-role');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'role/index');
+INSERT INTO `auth_item_child` VALUES ('系统管理员', 'role/quanxian');
 
 -- ----------------------------
 -- Table structure for auth_menu
@@ -157,13 +171,17 @@ CREATE TABLE `operators` (
   `record_time` timestamp NULL DEFAULT NULL,
   `last_login_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `last_login_time` datetime DEFAULT NULL,
+  `allowance` int(10) DEFAULT NULL,
+  `allowance_updated_at` int(10) DEFAULT NULL,
+  `access_token` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expire_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理员';
 
 -- ----------------------------
 -- Records of operators
 -- ----------------------------
-INSERT INTO `operators` VALUES ('1', 'admin', '1', '0', '系统管理员', '12345678910', '', '$2y$13$isb1XdtH8yYVfZeQvo1AQu5pVgP2BwcBbRdePyQu4JK30PCdzVZum', '2019-03-20 04:25:04', '2130706433', null);
+INSERT INTO `operators` VALUES ('1', 'admin', '1', '0', '系统管理员', '12345678910', '', '$2y$13$r9AHRgUYt9YnEuCPgsv91Orq684DrAe3SWi9xt3o/.3NITOAnRjuu', '2019-05-15 07:09:04', '2130706433', null, '0', '1557913444', 'VaQ9GkljEf-DCq1dFygpc2iKiiVGsMFG', '1557907581');
 
 -- ----------------------------
 -- Table structure for oper_log
@@ -179,10 +197,30 @@ CREATE TABLE `oper_log` (
   `op_ip` varchar(255) COLLATE utf8_bin DEFAULT '',
   `op_type` int(2) DEFAULT '0' COMMENT '操作类型：0新增类，1，修改类，2删除类，3查询类，9 其他',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作日志';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='操作日志';
 
 -- ----------------------------
 -- Records of oper_log
 -- ----------------------------
 INSERT INTO `oper_log` VALUES ('1', '2019-03-20 04:24:50', '2019-03-20 04:24:50', 'admin', '1', '修改了管理员admin的密码', '2130706433', '1');
 INSERT INTO `oper_log` VALUES ('2', '2019-03-20 06:27:23', '2019-03-20 06:27:23', 'admin', '1', '修改了管理员admin', '2130706433', '1');
+INSERT INTO `oper_log` VALUES ('3', '2019-04-10 05:04:09', '2019-04-10 05:04:09', 'admin', '1', '添加了管理员admin11', '2130706433', '1');
+INSERT INTO `oper_log` VALUES ('4', '2019-04-10 05:06:44', '2019-04-10 05:06:44', 'admin', '1', '添加了管理员bht', '2130706433', '1');
+INSERT INTO `oper_log` VALUES ('5', '2019-04-10 05:07:28', '2019-04-10 05:07:28', 'admin', '1', '添加了角色1', '2130706433', '0');
+INSERT INTO `oper_log` VALUES ('6', '2019-04-10 05:07:36', '2019-04-10 05:07:36', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('7', '2019-04-10 05:26:59', '2019-04-10 05:26:59', 'admin', '1', '为角色系统管理员重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('8', '2019-04-12 07:03:31', '2019-04-12 07:03:31', 'admin', '1', '为角色系统管理员重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('9', '2019-04-12 07:03:34', '2019-04-12 07:03:34', 'admin', '1', '为角色系统管理员重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('10', '2019-04-12 07:08:46', '2019-04-12 07:08:46', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('11', '2019-04-12 11:20:20', '2019-04-12 11:20:20', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('12', '2019-04-12 11:29:07', '2019-04-12 11:29:07', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('13', '2019-04-15 08:44:28', '2019-04-15 08:44:28', 'admin', '1', '修改了管理员admin的密码', '2130706433', '1');
+INSERT INTO `oper_log` VALUES ('14', '2019-04-15 10:10:43', '2019-04-15 10:10:43', 'admin', '1', '为角色系统管理员重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('15', '2019-04-15 10:10:51', '2019-04-15 10:10:51', 'admin', '1', '为角色系统管理员重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('16', '2019-04-16 05:12:35', '2019-04-16 05:12:35', 'admin', '1', '添加了角色普通', '2130706433', '0');
+INSERT INTO `oper_log` VALUES ('17', '2019-04-16 05:12:44', '2019-04-16 05:12:44', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('18', '2019-04-16 05:13:12', '2019-04-16 05:13:12', 'admin', '1', '添加了管理员boht', '2130706433', '1');
+INSERT INTO `oper_log` VALUES ('19', '2019-04-20 13:19:05', '2019-04-20 13:19:05', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('20', '2019-04-23 04:48:41', '2019-04-23 04:48:41', 'admin', '1', '为角色普通重新配置了权限', '2130706433', '9');
+INSERT INTO `oper_log` VALUES ('21', '2019-04-29 08:10:58', '2019-04-29 08:10:58', 'admin', '1', '添加了角色111', '2130706433', '0');
+INSERT INTO `oper_log` VALUES ('22', '2019-05-10 07:47:39', '2019-05-10 07:47:39', 'admin', '1', '添加了管理员ytj', '2130706433', '1');
