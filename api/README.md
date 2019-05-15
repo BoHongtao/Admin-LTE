@@ -9,8 +9,10 @@
 | userName | 用户名 | String | 是 |
 | password | 密码 | String | 是 |
 
-![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/1.png)
+#### 获取token
+![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/2.png)
 
+#### 请求其他接口
 ![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/1.png)
 
 ## 限流功能
@@ -30,6 +32,9 @@
 		"type": "yii\\web\\TooManyRequestsHttpException"
 	}
 ```
+#### 限流
+![](https://github.com/BoHongtao/Admin-LTE/blob/master/api/web/upload/3.png)
+
 
 
 
