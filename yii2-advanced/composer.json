@@ -25,7 +25,8 @@
 		"yiisoft/yii2-swiftmailer": "*",
 		"moonlandsoft/yii2-phpexcel": "*",
 		"overtrue/wechat": "~3.1",
-		"qiniu/php-sdk": "^7.2"
+		"qiniu/php-sdk": "^7.2",
+		"yiisoft/yii2-elasticsearch": "^2.0"
 	},
 	"require-dev": {
 		"yiisoft/yii2-codeception": "*",

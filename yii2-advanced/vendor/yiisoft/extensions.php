@@ -66,4 +66,13 @@ return array (
       '@moonland/phpexcel' => $vendorDir . '/moonlandsoft/yii2-phpexcel',
     ),
   ),
+  'yiisoft/yii2-elasticsearch' => 
+  array (
+    'name' => 'yiisoft/yii2-elasticsearch',
+    'version' => '2.0.4.0',
+    'alias' => 
+    array (
+      '@yii/elasticsearch' => $vendorDir . '/yiisoft/yii2-elasticsearch',
+    ),
+  ),
 );
