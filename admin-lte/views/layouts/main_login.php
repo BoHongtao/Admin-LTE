@@ -18,7 +18,7 @@ AppAssetLogin::register($this);
         <?php $this->head() ?>
         <?php if(isset($this->blocks['head'])) echo $this->blocks['head']?>
     </head>
-    <body class="login-layout">
+    <body class="hold-transition login-page">
         <?php $this->beginBody() ?>
             <?php echo $content; ?>
         <?php $this->endBody() ?>
