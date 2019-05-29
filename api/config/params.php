@@ -3,7 +3,9 @@ return [
     'allow_ip' => ['127.0.0.1'],
     //token过期时间
     'accessTokenExpire'=>'604800',
+//    'accessTokenExpire'=>'10',
     'secretkey'=> '336cb027d9c65cc7c2216eeda2cf6d27',
+    'pageSize'=>1,
     'host' => [
         'ip' => '127.0.0.1',
         'project' => 'api-dev',

@@ -16,6 +16,9 @@ class OperatorController extends BaseController
             'view' => [
                 'class' => 'app\modules\v1\controllers\operator\ViewAction'
             ],
+            'list' => [
+                'class' => 'app\modules\v1\controllers\operator\ListAction'
+            ],
         ];
     }
 }
