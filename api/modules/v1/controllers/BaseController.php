@@ -55,6 +55,10 @@ class BaseController extends Controller {
                 'application/json' => Response::FORMAT_JSON
             ]
         ];
+        //添加CORS过滤器
+        $behaviors['corsFilter']=[
+            'class'	=>\yii\filters\Cors::className(),
+        ];
         return $behaviors;
     }
 }
