@@ -61,4 +61,14 @@ class BaseController extends Controller {
         ];
         return $behaviors;
     }
+
+    # 鉴权代码（如果需要从app中进入且做了前后端分离，需要前端缓存鉴权数据，header中传递就可以），所有的类都要集成此基类
+    public function verifySign()
+    {
+        $verify_code = 0;
+        #######这里放鉴权代码##############
+        #   注意鉴权数据一定要签名         #
+        ##################################
+        return $verify_code;
+    }
 }
