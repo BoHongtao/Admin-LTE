@@ -2,7 +2,6 @@
 
 namespace app\modules\v1\controllers;
 
-use app\modules\v1\models\Operators;
 use Yii;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
@@ -10,7 +9,6 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\ContentNegotiator;
 use yii\filters\RateLimiter;
-use yii\rest\ActiveController;
 use yii\rest\Controller;
 use yii\web\Response;
 
