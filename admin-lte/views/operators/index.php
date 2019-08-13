@@ -52,28 +52,70 @@ $this->params['breadcrumbs'][] = '列表';
     function modifyInfo(id) {
         fbwindow('信息修改', "<?php echo \yii\helpers\Url::to(['orgsales/update']) ?>&id=" + id, 'l');
     }
-    function del(id) {
-        closeModal();
-        var flag = confirm('您确定删除此管理员吗？');
-        if (flag) {
+    //function del(id) {
+    //    closeModal();
+    //    var flag = confirm('您确定删除此管理员吗？');
+    //    if (flag) {
+    //        $.ajax({
+    //            url: "<?//= Url::toRoute('operators/del') ?>//",
+    //            type: 'post',
+    //            data: {id: id,_csrf: "<?//= Yii::$app->request->csrfToken ?>//"},
+    //            success: function (data) {
+    //                if (data.code == 200) {
+    //                    showToast('success', '删除业务员成功', '', 2000);
+    //                    search();
+    //                } else{
+    //                    showToast('error', '删除业务员失败', data.desc, 2000);
+    //                }
+    //            },
+    //            error: function (data) {
+    //                showToast('error', '系统错误，请稍后重试', '', 2000);
+    //            }
+    //        });
+    //    }
+    //}
+    //
+    function changeStatus(id) {
+        layer.confirm('您想改变此管理员状态？', {
+            btn: ['启用','停用'] //按钮
+        }, function(){
+            $.ajax({
+                url: "<?= Url::toRoute('operators/undel') ?>",
+                type: 'post',
+                data: {id: id,_csrf: "<?= Yii::$app->request->csrfToken ?>"},
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg('启用管理员成功', {icon: 1});
+                        search();
+                    } else{
+                        layer.msg(data.desc, {time: 2000});
+                    }
+                },
+                error: function (data) {
+                    layer.msg('系统错误，请稍后重试', {time: 2000});
+                }
+            });
+        }, function(){
             $.ajax({
                 url: "<?= Url::toRoute('operators/del') ?>",
                 type: 'post',
                 data: {id: id,_csrf: "<?= Yii::$app->request->csrfToken ?>"},
                 success: function (data) {
                     if (data.code == 200) {
-                        showToast('success', '删除业务员成功', '', 2000);
+                        layer.msg('禁用管理员成功', {icon: 1});
                         search();
                     } else{
-                        showToast('error', '删除业务员失败', data.desc, 2000);
+                        layer.msg(data.desc, {time: 2000});
                     }
                 },
                 error: function (data) {
-                    showToast('error', '系统错误，请稍后重试', '', 2000);
+                    layer.msg('系统错误，请稍后重试', {time: 2000});
                 }
             });
-        }
+        });
     }
+
+
     //选择父级单位
     function chooseParorg() {
         fbwindow("选择单位", "<?= \yii\helpers\Url::toRoute('organizations/select-org') ?>", 'l');

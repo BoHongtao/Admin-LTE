@@ -42,7 +42,7 @@ use app\components\AjaxPager;
                                 <a href="javascript:void(0)"  class="btn btn-info btn-xs" style="margin-left: 5px;display: block" onclick="resetPwd('<?php echo $result['id'] ?>')"> 重置密码</a>
                             <?php endif; ?>
                             <?php if (\app\components\Utils::checkAccess("operators/update")): ?>
-                                <a href="#" onclick="del(<?= $result->id ?>)" class="btn btn-default btn-xs" style="display: block"> 删除</a>
+                                <a href="javascript:void(0)" onclick="del(<?= $result->id ?>)" class="btn btn-default btn-xs" style="display: block"> 删除</a>
                             <?php endif; ?>
                         </div>
                     </td>
