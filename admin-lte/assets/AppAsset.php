@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
@@ -46,6 +46,7 @@ class AppAsset extends AssetBundle
 //        "static/bower_components/fastclick/lib/fastclick.js",
         "static/dist/js/adminlte.min.js",
 //        "static/dist/js/demo.js",
+        "static/js/layer.js",
         'static/js/dialog.js',
         'static/js/wang.js',
         'static/js/toastr.js',
