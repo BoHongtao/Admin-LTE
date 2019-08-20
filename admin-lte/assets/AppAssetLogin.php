@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
  * @license http://www.yiiframework.com/license/
@@ -25,9 +25,6 @@ class AppAssetLogin extends AssetBundle
         'static/plugins/iCheck/square/blue.css',
     ];
     public $js = [
-        'static/bower_components/jquery/dist/jquery.min.js',
-        'static/bower_components/bootstrap/dist/js/bootstrap.min.js',
-        'static/plugins/iCheck/icheck.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
