@@ -68,25 +68,28 @@ $this->params['breadcrumbs'][] = '列表';
         motai('权限配置', '<?= Url::toRoute(['role/quanxian']) ?>&name=' + name, 'l');
     }
     function del(name){
-        var flag = confirm('您确定删除该角色吗？');
-        if(flag){
+        layer.confirm('您确定删除该角色吗？', {
+            btn: ['是','否'] //按钮
+        }, function(){
             $.ajax({
-                url:'<?= Url::toRoute(['role/del'])?>',
-                type:'post',
-                data:{name:name,_csrf: "<?= Yii::$app->request->csrfToken ?>"},
-                success:function (data) {
-                    if(data.code == 200){
-                        showToast('success','删除角色成功','',2000);
-                        setTimeout(window.location.reload(),2000);
+                url: "<?php echo Url::toRoute(['role/del'])?>",
+                dataType: 'json',
+                data:{name:name},
+                type: 'post',
+                success:function(data){
+                    if(data.code==200){
+                        layer.msg('删除角色成功', {icon: 1});
+                        setTimeout('window.location.href="<?= Url::toRoute(['role/index']) ?>"', 1500);
                     }else{
-                        showToast('error','删除角色失败',data.desc,2000);
+                        layer.msg(data.desc, {time: 2000});
                     }
                 },
-                error:function (data) {
-                    showToast('error','系统错误，请稍后重试','',2000);
+                error: function (data) {
+                    layer.msg('系统错误，请稍后重试', {time: 2000});
                 }
-            })
-        }
+            });
+        }, function(){
+        });
     }
 </script>
 <?php

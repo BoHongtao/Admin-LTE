@@ -7,7 +7,7 @@ use yii\helpers\Url;
 ?>
 <style>
     .checkmod {
-        margin-bottom: 20px;
+        /*margin-bottom: 20px;*/
         border: 1px solid #ebebeb;
     }
 
@@ -17,7 +17,7 @@ use yii\helpers\Url;
     }
 
     .checkmod dt {
-        padding-left: 10px;
+        padding-left: 25px;
         height: 30px;
         line-height: 30px;
         font-weight: bold;
@@ -42,8 +42,8 @@ use yii\helpers\Url;
     }
 
     .checkmod dd {
-        padding-left: 10px;
-        line-height: 30px;
+        padding-left: 40px;
+        line-height: 25px;
     }
 
     .checkmod dd .checkbox {

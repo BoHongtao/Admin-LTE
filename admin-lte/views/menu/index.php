@@ -118,24 +118,29 @@ $this->params['breadcrumbs'][] = '列表';
 <!--</div>-->
 <?php $this->beginBlock('script') ?>
 <script type="text/javascript">
-    function del(id) {
-        var flag = confirm('您确定删除此权限及子权限吗？');
-        if (flag) {
+    function del(id){
+        layer.confirm('您确定删除此权限及子权限吗？', {
+            btn: ['是','否'] //按钮
+        }, function(){
             $.ajax({
-                url: "<?= Url::toRoute('menu/delete') ?>",
+                url: "<?php echo Url::toRoute(['menu/delete'])?>",
+                dataType: 'json',
+                data:{'id':id,},
                 type: 'post',
-                data: {id: id},
-                success: function (data) {
-                    if (data.code == 200) {
-                        showToast('success', '删除成功', '权限及子权限已成功删除！', 2000);
-                        window.location.reload();
-                    } else if (data.code == 0) {
-                        showToast('error', '删除失败', '请稍后重试', 2000);
-                        window.location.reload();
+                success:function(data){
+                    if(data.code==200){
+                        layer.msg('权限及子权限已成功删除', {icon: 1});
+                        setTimeout('window.location.href="<?= Url::toRoute(['menu/index']) ?>"', 1500);
+                    }else{
+                        layer.msg(data.desc, {time: 2000});
                     }
+                },
+                error: function (data) {
+                    layer.msg('系统错误，请稍后重试', {time: 2000});
                 }
             });
-        }
+        }, function(){
+        });
     }
 </script>
 <?php $this->endBlock(); ?>
